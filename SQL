@@ -1,0 +1,33 @@
+CREATE TABLE Students2 ( 
+    StudentID INT PRIMARY KEY, 
+    FirstName VARCHAR(50) NOT NULL, 
+    LastName VARCHAR(50) NOT NULL, 
+    Gender CHAR(1), 
+    Email VARCHAR(100), 
+    PhoneNumber VARCHAR(15), 
+    Address VARCHAR(255) 
+)
+desc Students2
+INSERT INTO Students2 VALUES (1, 'Niranj', 'M', 'F', 'niranj@gmail.com', '123-456-7890', '1/5,east street')
+INSERT INTO Students2 VALUES(3,'papu','N','F','papu@gmail.com','987-654-3456','6/3,north street')
+INSERT INTO Students2 VALUES (4,'Rani','P','F','rani@gmail.com','986-456-2345','7/2,south street')
+INSERT INTO Students2 VALUES(2,'Renu','S','F','renu@gmail.com','123-456-3456','2/4,west street')
+select * from Students2
+
+CREATE TABLE Marks1 ( 
+    MarkID INT PRIMARY KEY, 
+    StudentID INT, 
+    Subject VARCHAR(50) NOT NULL, 
+    Mark INT NOT NULL 
+     
+)
+desc Marks1
+INSERT INTO Marks1 VALUES (1, 1, 'Mathematics', 85)
+INSERT INTO Marks1 VALUES  (2, 1, 'Science', 90)
+INSERT INTO Marks1 VALUES  (3, 2, 'Tamil', 78)
+INSERT INTO Marks1 VALUES  (4, 2, 'Science', 88)
+INSERT INTO Marks1 VALUES (5, 3, 'English', 92)
+select * from Marks1
+
+ALTER TABLE Students2 ADD MiddleName VARCHAR(10) 
+SELECT * FROM Students2 WHERE FirstName = 'Niranj'
