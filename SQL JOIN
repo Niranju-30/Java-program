@@ -1,0 +1,67 @@
+CREATE TABLE EmployeePersonalDetails (
+    EmployeeID INT PRIMARY KEY ,
+    EmployeeName VARCHAR(100),
+    Address VARCHAR(255),
+    Designation VARCHAR(50),
+    PhoneNumber VARCHAR(15),
+    Department VARCHAR(50)
+);
+desc EmployeePersonalDetails
+    
+CREATE TABLE EmployeeSalary (
+    EmployeeID INT,
+    HRA DECIMAL(10, 2),
+    DA DECIMAL(10, 2),
+    TA DECIMAL(10, 2),
+    BasicPay DECIMAL(10, 2),
+    TotalSalary AS (BasicPay + HRA + DA + TA),
+    Department VARCHAR(50),
+    FOREIGN KEY (EmployeeID) REFERENCES EmployeePersonalDetails(EmployeeID)
+);
+desc EmployeeSalary
+
+INSERT INTO EmployeePersonalDetails VALUES(1,'Niranj', '123 Main St', 'Software Engineer', '555-1234', 'Engineering');
+INSERT INTO EmployeePersonalDetails VALUES(2,'Papu', '456 Oak Ave', 'HR Manager', '555-5678', 'Human Resources');
+INSERT INTO EmployeePersonalDetails VALUES(3,'Rani', '789 Pine Rd', 'Marketing Specialist', '555-8765', 'Marketing');
+Select * from EmployeePersonalDetails
+
+INSERT INTO EmployeeSalary (EmployeeID, HRA, DA, TA, BasicPay, Department) VALUES(1, 10000, 5000, 3000, 50000, 'Engineering');
+INSERT INTO EmployeeSalary (EmployeeID, HRA, DA, TA, BasicPay, Department) VALUES(2, 9000, 4500, 2500, 45000, 'Human Resources');
+INSERT INTO EmployeeSalary (EmployeeID, HRA, DA, TA, BasicPay, Department) VALUES(3, 7000, 3500, 2000, 35000, 'Marketing');
+Select * from EmployeeSalary 
+
+SELECT ep.EmployeeID, ep.EmployeeName, ep.Department, es.TotalSalary 
+FROM EmployeePersonalDetails ep 
+JOIN EmployeeSalary es ON ep.EmployeeID = es.EmployeeID 
+WHERE es.TotalSalary = ( 
+    SELECT MAX(es1.TotalSalary) 
+    FROM EmployeeSalary es1 
+    WHERE es1.Department = es.Department 
+)
+ ep.EmployeeID,  
+    ep.EmployeeName,  
+    ep.Department,  
+    es.TotalSalary, 
+    es.HRA, 
+    es.DA, 
+    es.TA, 
+    es.BasicPay, 
+    (es.HRA / es.TotalSalary) * 100 AS HRA_Percentage, 
+    (es.DA / es.TotalSalary) * 100 AS DA_Percentage, 
+    (es.TA / es.TotalSalary) * 100 AS TA_Percentage, 
+    (es.BasicPay / es.TotalSalary) * 100 AS BasicPay_Percentage 
+FROM  
+    EmployeePersonalDetails3 ep 
+JOIN  
+    EmployeeSalary3 es  
+ON  
+    ep.EmployeeID = es.EmployeeID 
+WHERE  
+    es.TotalSalary = ( 
+        SELECT  
+            MAX(es1.TotalSalary) 
+        FROM  
+            EmployeeSalary3 es1 
+        WHERE  
+            es1.Department = es.Department 
+    )
